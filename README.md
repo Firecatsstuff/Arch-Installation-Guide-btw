@@ -24,7 +24,7 @@ Made a guide for arch installation for fun. Not everyone can understand Archwiki
 
 # Installation
 
-1. Use the archinstall command to start the installation
+1. Use the **archinstall** command to start the installation
 
    `archinstall`
 
@@ -35,26 +35,26 @@ Made a guide for arch installation for fun. Not everyone can understand Archwiki
 3. In Locales pick your language and keyboard layout
 
 
-4. In Disk configuration I recommend using best effort default partitioning layout
+4. In Disk configuration I recommend using **Best Effort Partitioning Layout**
 
 
-5. In bootloader grub is the most recommended one
+5. In bootloader **Grub** is the most recommended one
 
 
 6. in user account pick your username and password and save configuration
 
 
-7. In Profile pick any DE or WM you like (If you want to use Hyprland feel free to follow my guide)
+7. In Profile pick any DE or WM you like (If you want to use **Hyprland** feel free to follow my guide)
 
 
-8. In Audio Pipewire is preferred
+8. In Audio **Pipewire** is preferred
 
 
-9. In Network Configuration Network Manager is recommended
+9. In Network Configuration **Network Manager** is recommended
 
 
 10. In Timezone select yours
 
 11. Select install and wait till it`s finished
 
-12. Now you`re allowed to say "I use arch btw",enjoy!
+12. Now you`re allowed to say "**I use arch btw**",enjoy!
