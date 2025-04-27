@@ -1,60 +1,39 @@
 # Arch-Installation-Guide-btw
-Made a guide for arch installation for fun. Not everyone can understand Archwiki so yeah.
-
-# Connecting to the internet
-
-1. Choose Arch installation medium
-
-1.5. In the command line,change your keyboard layout if it isn´t us
-   (german layout for example)
-   
-   `loadkeys de`
-
- 2. Use the iwctl commannd 
-
-   `iwctl`
-
- 3. Then connect to the internet
-
-   `station wlan0 connect (wifi name)`
-
- 4. Type in your wifi password,afterwards quit iwctl to get back to the command line
-
-   `quit`
-
-# Installation
-
-1. Use the **archinstall** command to start the installation
-
-   `archinstall`
+I'm going to make the easiest guide that I can write for users who want to switch to arch (btw) without using the archinstall script and without reading the archwiki since it's hard for some users to understand.
 
 
-2. Set Mirrors to your conuntry
+
+#    The Guide
+
+# Step 1 (Optional): Changing Keyboard Layout
+
+If you have a keyboard layout that isn't us, change it with the `loadkeys` command.
+
+For example if you want to change it to the german keymap:
 
 
-3. In Locales pick your language and keyboard layout
+`loadkeys de`
 
 
-4. In Disk configuration I recommend using **Best Effort Partitioning Layout**
+# Step 2 (Optional): Connecting to Wi-Fi
+Although I strongly consider using ethernet instead of wifi, you can still connect to wifi with `iwd`
 
+So you have to execute
 
-5. In bootloader **Grub** is the most recommended one
+`iwctl`
 
+to get into iwd and to connect to wifi you have to type this:
 
-6. in user account pick your username and password and save configuration
+`station wlan0 connect WifiName`
 
+Enter your password and test your connection by:
 
-7. In Profile pick any DE or WM you like (If you want to use **Hyprland** feel free to follow my guide)
+`ping 1.1.1.1`
 
+(you can type any website instead of 1.1.1.1)
 
-8. In Audio **Pipewire** is preferred
+if it returns 64 Bytes over and over terminate it by clicking `CTRL + C`
 
+# Step 3: Partitioning The Disk
 
-9. In Network Configuration **Network Manager** is recommended
-
-
-10. In Timezone select yours
-
-11. Select install and wait till it`s finished
-
-12. Now you`re allowed to say "**I use arch btw**",enjoy!
+In the Archwiki it is considered using fdisk but there is another tool called `cfdisk` and it is easier since it has a text user interface.
