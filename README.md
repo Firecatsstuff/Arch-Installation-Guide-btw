@@ -109,7 +109,7 @@ If you use an amd or intel cpu, make sure to add `adm-ucode` or `intel-ucode` to
 
 Firstly type:
 
-`genfstab /mnt'
+`genfstab /mnt`
 
 It will show you the file system tab. But now you have to copy the contents into a file likes this:
 
