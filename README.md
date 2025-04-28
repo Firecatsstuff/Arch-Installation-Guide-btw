@@ -2,7 +2,7 @@
 I'm going to make the easiest guide that I can write for users who want to switch to arch (btw) without using the archinstall script and without reading the archwiki since it's hard for some users to understand.
 
 
-**DISCLAIMER**: if your terminal screen is full, click **CTRL + L** to clear everything.
+**DISCLAIMER**: if your terminal screen gets full, click **CTRL + L** to clear everything.
 
 
 #    The Guide
@@ -38,15 +38,18 @@ if it returns 64 Bytes over and over terminate it by clicking `CTRL + C`
 
 # Step 3: Partitioning The Disk
 
-You have to enter `lsblk` first to see what disk you're using. so for example mine is nvme0n1 but yours could be sda, sdb etc.
+You have to enter `lsblk` first to see what disk you're using. So for example mine is nvme0n1 but yours could be sda, sdb etc.
 So you have to remember your given name for the disk to use cfdisk like this:
 
 `cfdisk /dev/diskname`
 
 Delete all partitions until you only see Free Space at the top. You have to create new partitions for the arch installations.
+
 **1. (Boot)** Make the size 1G since it's preferred.
-**2 (Swap)** Make the size 4G or more.
-**3 (Root)** Just press enter if it asks you for the size.
+
+**2. (Swap)** Make the size 4G or more.
+
+**3. (Root)** Just press enter if it asks you for the size.
 
 Afterwards if you created those partitions, select "Commit" in cfdisk then exit it by selecting "Quit".
 
@@ -96,7 +99,7 @@ If you got UEFI on your computer:
 
 # Step 6: Installing Base Packages
 
-Install the base packages like this (only include efibootmgr if you got a uefi system):
+Install the base packages like this (only include efibootmgr if you got a uefi system and include networkmanager if you need to connect to wifi):
 
 `pacstrap /mnt base linux linux-firmware sof-firmware alsa-utils pipewire pipewire-alsa pipewire-pulse wireplumber base-devel grub networkmanager efibootmgr nano`
 
@@ -212,7 +215,7 @@ To prevent that edit the file like this:
 
 Find the line that consist of:
 
-# %wheel ALL=(ALL) ALL
+**%wheel ALL=(ALL) ALL**
 
 remove the hashtag to properly execute commands with sudo.
 
@@ -230,8 +233,28 @@ Enable SDDM like this:
 
 `systemctl enable sddm`
 
-and NetworkManager (optional) löike this:
+and NetworkManager (optional) like this:
 
 `systemctl enable NetworkManager`
 
 # Step 15: Installing Grub
+
+First run `lsblk` command to identify the given disk name. Remember,it is over your created partitions.
+If you know what the given name is,run the command to install grub on the disk:
+
+`grub-install /dev/disksgivenname`
+
+If it finished run this command to update grub:
+
+`grub-mkconfig -o /boot/grub/grub.cfg`
+
+# Step 16 (Last Step): Unmounting and rebooting into the new system
+
+Enter `exit` to get into the archiso command line again and run this to unmount everything:
+
+`umount -a`
+
+(No this is not a typo btw)
+
+
+# Ignore the errors saying target is busy and now you can finally boot into your new arch setup withoout archinstall!
