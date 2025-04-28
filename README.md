@@ -17,7 +17,7 @@ For example if you want to change it to the german keymap:
 `loadkeys de`
 
 
-# Step 2 (Optional): Connecting to Wi-Fi
+# Step 2 (Optional): Connecting To Wi-Fi
 Although I strongly consider using ethernet instead of wifi, you can still connect to wifi with `iwd`
 
 So you have to execute
@@ -50,7 +50,7 @@ Delete all partitions until you only see Free Space at the top. You have to crea
 
 Afterwards if you created those partitions, select "Commit" in cfdisk then exit it by selecting "Quit".
 
-# Step 4: Formatting the partitions
+# Step 4: Formatting The Partitions
 
 First execute `lsblk` to recognize all partitions.
 
@@ -68,7 +68,7 @@ Lastly the swap partition
 
 `mkswap /dev/yourswappartition`
 
-# Step 5: Mounting the partitions
+# Step 5: Mounting The Partitions
 
 **The Root Partition**
 
@@ -94,3 +94,144 @@ If you got UEFI on your computer:
 
 `swapon /dev/yourswappartition /mnt`
 
+# Step 6: Installing Base Packages
+
+Install the base packages like this (only include efibootmgr if you got a uefi system):
+
+`pacstrap /mnt base linux linux-firmware sof-firmware alsa-utils pipewire pipewire-alsa pipewire-pulse wireplumber base-devel grub networkmanager efibootmgr nano`
+
+If you use an amd or intel cpu, make sure to add `adm-ucode` or `intel-ucode` too
+
+# Step 7: FsTab (File System tab)
+
+Firstly type:
+
+`genfstab /mnt'
+
+It will show you the file system tab. But now you have to copy the contents into a file likes this:
+
+`genfstab /mnt > /mnt/etc/fstab`
+
+Now check the contents of the file to make sure it worked:
+
+`cat /mnt/etc/fstab`
+
+If it shows the same contents as it did by running the `genfstab` command, that means it worked.
+
+# Step 8: Setting Up The Local Timezone
+
+Change your root to your system first:
+
+`arch-chroot /mnt`
+
+Now view available citiews like this:
+
+`ls /usr/share/zoneinfo/yourcontinent/`
+
+(Replace `yourcontinent` with your actual continent)
+
+Afterwards you can setup your local time like this:
+
+`ln -sf /usr/share/zoneinfo/yourcontinent/yourcity /etc/localtime`
+
+Check your date to see if it worked:
+
+`date`
+
+Lastly synchronize the system clock like this:
+
+`hwclocl -systohc`
+
+# Step 9: Localization
+
+Firstly edit the locale.gen file like this:
+
+`nano /etc/locale.gen`
+
+Remove the hashtag opn the locale you want so if you want english locales remove the hashtag of the line that consist of:
+
+`en_US.UTF-8 UTF-8`
+
+To exit nano do these keybinds: **CTRL+O**, **ENTER** and **CTRL+X**
+
+Now enter this command to actually generate the locales:
+
+`locale-gen`
+
+You also have to specify your locale in the locale.conf file like this:
+
+`nano /etc>/locale.conf`
+
+Proceed by adding this in the file:
+
+`LANG:en_US.UTF-8`
+
+exit nano with the same keybinds I've mentioned before.
+
+# Step 10: Keymap (Optional):
+
+if you have a keyboard layout other than us, follow these steps:
+
+Firstly edit the vconsole.conf file like this:
+
+`nano /etc/vconsole.conf`
+
+Add this in the file:
+
+`KEYMAP=yourkeyboardlayout`
+
+(Obviously replace "yourkeyboardlayout" with your actual layout)
+Write the file then exit it.
+
+# Step 11: Host Name
+
+Edit /etc/hostname with `nano` and type in the host name you want.
+
+# Step 12: Creating User And Changing Passwords
+
+First change your root password by using this command:
+
+`passwd`
+
+It asks you to type in your new password twice then you're already done.
+
+To add your personal user enter this:
+
+`useradd -m -G wheel -s /bin/bash yourusername`
+
+**(Obviously you have to replace `yourusername` with your username of choice)**
+
+To add a password to your user enter this command:
+
+`passwd yourusername`
+
+Now, you can't execute commands with sudo on your user yet because "your user is not in the sudoers file"
+To prevent that edit the file like this:
+
+`EDITOR=nano visudo`
+
+Find the line that consist of:
+
+# %wheel ALL=(ALL) ALL
+
+remove the hashtag to properly execute commands with sudo.
+
+# Step 13: Installing Packages Of Choice
+
+So let`s say you want to install plasma on your machine, install the needed packages like this:
+
+`sudo pacman -S sddm plasma konsole firefox`
+
+# Step 14: Enabling needed services
+
+So you have to enable sddm to login in plasma and NetworkManager if you want to connect to Wi-Fi.
+
+Enable SDDM like this:
+
+`systemctl enable sddm`
+
+and NetworkManager (optional) löike this:
+
+`systemctl enable NetworkManager`
+
+# Step 15: Installing Grub
