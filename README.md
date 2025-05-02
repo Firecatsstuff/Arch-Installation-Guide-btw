@@ -24,7 +24,7 @@ So you have to execute
 
 `iwctl`
 
-to get into iwd and to connect to wifi you have to type this:
+to get into iwd .To connect to wifi you have to type this:
 
 `station wlan0 connect WifiName`
 
@@ -101,11 +101,11 @@ If you got UEFI on your computer:
 
 Install the base packages like this (only include efibootmgr if you got a uefi system and include networkmanager if you need to connect to wifi):
 
-`pacstrap /mnt base linux linux-firmware sof-firmware alsa-utils pipewire pipewire-alsa pipewire-pulse wireplumber base-devel grub networkmanager efibootmgr nano`
+`pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub networkmanager efibootmgr nano`
 
-If you use an amd or intel cpu, make sure to add `adm-ucode` or `intel-ucode` too
+If you use an amd or intel cpu, make sure to add `amd-ucode` or `intel-ucode` too
 
-# Step 7: FsTab (File System tab)
+# Step 7: fstab (File System tab)
 
 Firstly type:
 
